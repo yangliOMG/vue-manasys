@@ -1,0 +1,95 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+img {vertical-align: middle;}
+/*自定义公共样式*/
+.mt-10{margin-top: 10px;}.mt-20{margin-top: 20px;}.mt-30{margin-top: 30px;}.mt-50{margin-top: 50px;}
+.mb-1{margin-bottom: 1px;}.mb-2{margin-bottom: 2px;}.mb-10{margin-bottom: 10px;}.mb-20{margin-bottom: 20px;}.mb-30{margin-bottom: 30px;}.mb-40{margin-bottom: 40px;}
+.ml-8{margin-left: 8px;}.ml-10{margin-left: 10px;}.ml-20{margin-left: 20px;}
+.mr-10{margin-right: 10px;}.mr-20{margin-right: 20px;}
+.mg-5{margin: 5px;}
+.pd-10{padding: 10px}.pd-15{padding: 15px}
+.pt-10{padding-top: 10px}.pt-20{padding-top: 20px}.pt-100{padding-top: 100px}
+.pl-10{padding-left:10px}.pl-15{padding-left:15px}.pl-17{padding-left:17px}.pl-20{padding-left:20px}.pl-40{padding-left:40px}
+.pr-15{padding-right:15px}.pr-20{padding-right:20px}
+.pb-10{padding-bottom: 10px}.pb-20{padding-bottom: 20px}.pb-25{padding-bottom: 25px}
+.h-18{height: 18px;}.h-20{height: 20px;}.h-40{height: 40px;}
+.f-13{font-size: 13px}.f-16{font-size: 16px}.f-20{font-size: 20px}
+.scale9{transform: scale(0.9);}.scale8{transform: scale(0.8);}
+.d-flex{display: flex;}
+.f-r{float:right;}
+.f-l{float:left;}
+.inbk{display: inline-block;}
+.ofhd{overflow: hidden;}
+.c-black6{color: #666}
+.c-black9{color: #999}
+.c-blacka{color: #aaa}
+.c-nm{color: #09b78d}
+.c-dg{color: #ff2f2c}
+
+.searchbox {padding:11px;display: flex;align-items: center;justify-content: space-between;}
+.title{padding: 2px 0 10px 0;color: #4c4c4c;}
+.title2{padding: 10px;color: #4c4c4c}
+.title:after .title2:after{clear: both;}
+.borderBox{border: 1px solid #ddd}
+.borderBt{border-bottom: 1px solid #ddd}
+.blankBox{text-align: center;padding: 40px;font-size: 16px;color: #999;font-weight: bold;}
+.inputBox{position: relative;display: inline-block;width: 160px;}
+.titlePlate{margin-top: -3px;margin-right: 10px;}
+.totalPage{line-height: 32px;float: right;margin: 5px;}
+.nav-tabs {border-width: 0;border-bottom: 1px solid #ddd;}
+.nav {padding-left: 0;margin-bottom: 0;list-style: none;}
+.nav>li {position: relative;display: block;}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;cursor: default;background-color: #fff;border: 1px solid #ddd;
+    border-bottom-color: transparent;}
+.nav-tabs>li>a {margin-right: 2px;line-height: 1.42857143;border: 1px solid transparent;border-radius: 4px 4px 0 0;}
+.nav>li>a {position: relative;display: block;padding: 10px 15px;}
+.d-flex{display: flex;}
+.f-r{float:right;}
+.f-l{float:left;}
+.ofhd{overflow: hidden;}
