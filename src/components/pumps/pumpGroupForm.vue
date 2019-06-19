@@ -194,7 +194,6 @@ export default {
         pumpQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         pumpsNum: 1,
         pumpNo: [],
-        loading: false
       },
       form: {
         groupname: ''

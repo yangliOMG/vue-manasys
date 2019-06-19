@@ -208,7 +208,7 @@ const dynamicRoutes = [
         component: schedule,
         meta: {
           layout: 'baseLayout',
-          store: ['pumpGroup']
+          store: ['plan']
         }
       }]
     }, {
