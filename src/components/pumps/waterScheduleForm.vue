@@ -61,19 +61,21 @@
                 <td>每度电价(元)</td>
               </tr>
             </thead>
-            <tr v-for="li in itemsList" :key="li.id">
-              <td>{{li.beginTime.show}}</td>
-              <td>{{li.endTime.show}}</td>
-              <td>
-                <input class="h-18" type="number" v-model="li.pressure">
-              </td>
-              <td>
-                <input class="h-18" type="number" v-model="li.flow">
-              </td>
-              <td>
-                <input class="h-18" type="number" v-model="li.electrovalence">
-              </td>
-            </tr>
+            <tbody>
+              <tr v-for="li in itemsList" :key="li.id">
+                <td>{{li.beginTime.show}}</td>
+                <td>{{li.endTime.show}}</td>
+                <td>
+                  <input class="h-18" type="number" v-model="li.pressure">
+                </td>
+                <td>
+                  <input class="h-18" type="number" v-model="li.flow">
+                </td>
+                <td>
+                  <input class="h-18" type="number" v-model="li.electrovalence">
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div class="text-center">
@@ -109,12 +111,14 @@ export default {
       dialogTableVisible: false,
       params: {
         type: '',
-        hourArr: new Array(24).fill().map((v, i) => (i + "").padStart(2, "0")),
-        hour: "00",
-        minuteArr: new Array(60).fill().map((v, i) => (i + "").padStart(2, "0")),
-        minute: "00",
-        granularityArr: ["05", "10", "15", "20", "25", "30", "40", "45", "60",],
-        granularity: "60"
+        id: '',
+        version: '',
+        hourArr: new Array(24).fill().map((v, i) => (i + '').padStart(2, '0')),
+        hour: '00',
+        minuteArr: new Array(60).fill().map((v, i) => (i + '').padStart(2, '0')),
+        minute: '00',
+        granularityArr: ['05', '10', '15', '20', '25', '30', '40', '45', '60'],
+        granularity: '60'
       },
       form: {
         schedulename: '',
@@ -133,17 +137,18 @@ export default {
     show (type = 'createSchedule', data) {
       if (type === 'editSchedule') {
         if (data.status === 2) return
-        var { planItems, name, timeStep, beginTime } = data
+        var { planItems, name, timeStep, beginTime, id, version } = data
+        this.params.id = id
+        this.params.version = version
         this.form.schedulename = name
-        this.form.hour = new Date(beginTime).format("hh")
-        this.form.minute = new Date(beginTime).format("mm")
+        this.form.hour = new Date(beginTime).format('hh')
+        this.form.minute = new Date(beginTime).format('mm')
         this.form.granularity = timeStep
         this.itemsList = planItems.map(li => ({
           ...li,
-          beginTime: { show: li.beginTime, value: new Date(new Date().format("yyyy-MM-dd ") + li.beginTime).getTime() },
-          endTime: { show: li.endTime, value: new Date(new Date().format("yyyy-MM-dd ") + li.endTime).getTime() }
+          beginTime: { show: li.beginTime, value: new Date(new Date().format('yyyy-MM-dd ') + li.beginTime).getTime() },
+          endTime: { show: li.endTime, value: new Date(new Date().format('yyyy-MM-dd ') + li.endTime).getTime() }
         }))
-
       }
       this.dialogTableVisible = true
       this.params.type = type
@@ -158,9 +163,9 @@ export default {
         this.itemsList.push({
           beginTime: tTrans(hour, minute, granularity * i),
           endTime: tTrans(hour, minute, granularity * (i + 1)),
-          pressure: "",
-          flow: "",
-          electrovalence: ""
+          pressure: '',
+          flow: '',
+          electrovalence: ''
         })
       }
     },
@@ -172,16 +177,17 @@ export default {
         return this.$message.error('请添加计划项')
       }
       var data
-      if (this.params.type === "editSchedule") {
+      if (this.params.type === 'editSchedule') {
         data = {
-          id: this.params.obj.id,
-          version: this.params.obj.version,
+          id: this.params.id,
+          version: this.params.version,
           items: this.itemsList.map(li => ({
             id: li.id,
             version: li.version,
             pressure: li.pressure,
             flow: li.flow,
-            electrovalence: li.electrovalence          }))
+            electrovalence: li.electrovalence
+          }))
         }
       } else {
         data = {
@@ -191,20 +197,21 @@ export default {
           items: this.itemsList.map(li => ({
             ...li,
             beginTime: li.beginTime.value,
-            endTime: li.endTime.value          }))
+            endTime: li.endTime.value
+          }))
         }
       }
-      _this.$emit('saveSchedule', data, this.params.type === 'createSchedule')
-      _this.dialogTableVisible = false
+      this.$emit('saveSchedule', data, this.params.type === 'createSchedule')
+      this.dialogTableVisible = false
     },
     closed () {
       for (let i in this.form) {
         this.form[i] = ''
       }
       this.params.type = ''
-      this.params.hour = "00"
-      this.params.minute = "00"
-      this.params.granularity = "60"
+      this.params.hour = '00'
+      this.params.minute = '00'
+      this.params.granularity = '60'
       this.itemsList = []
       this.$nextTick(() => {
         this.$refs['form'].clearValidate()

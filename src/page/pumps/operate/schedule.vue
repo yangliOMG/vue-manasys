@@ -1,7 +1,7 @@
 <template>
   <div class="page-content">
-    <div class="borderBt" style="padding:11px;">
-      <div id="createBtn" class="btn btn-fileR" ng-click="clickCreateSchedule()">
+    <div class="borderBt" style="padding:11px;display:none">
+      <div id="createBtn" class="btn btn-fileR" @click="$refs['WaterScheduleForm'].show()">
         <i class="icon icon-createR"></i>创建供水计划
       </div>
     </div>
@@ -13,22 +13,28 @@
           <span>{{statusMap[li.status]}}</span>
           <label
             :class="[{'disabled':li.status===0 },{'checked':li.status===2 },'ios-switch','scale9']"
-            @click="changeGroupRadio(li.id,li.status)"
+            @click="changeGroupRadio(li)"
           >
             <div class="checkbox"></div>
           </label>
           <div
             :class="[li.status!=2?'btn-blueL':'btn-greyL' ,'btn','btn-td']"
-            @click="clickEdit(li.id, li.status)"
+            @click="$refs['WaterScheduleForm'].show('editSchedule',li)"
           >编辑</div>
           <div
             :class="[li.status!=2?'btn-blueL':'btn-greyL' ,'btn','btn-td']"
-            @click="clickDelete(li.id, li.status)"
+            @click="clickDelete(li)"
           >删除</div>
         </div>
       </div>
       <div class="borderBt pd-15">
-        <TableColumn items="li.planItems" columns="columns"></TableColumn>
+        <TableColumn :items="li.planItems" :columns="[
+          {key:'起始时间',value:'beginTime'},
+          {key:'终止时间',value:'endTime'},
+          {key:'供水水压(mPa)',value:'pressure'},
+          {key:'供水流量(m³/h)',value:'flow'},
+          {key:'每度电价(元)',value:'electrovalence'}
+        ]"></TableColumn>
       </div>
     </div>
     <div v-if="scheduleList.length!==0" class="pagination-bar">
@@ -100,6 +106,25 @@ export default {
       this.$refs['ConfirmModal'].show(title, '确认' + title + '？', fn)
     },
     /**
+     * 事件： 点击删除按钮
+     */
+    clickDelete (li) {
+      var { id, version, status } = li
+      var _this = this
+      if (status === 2) return
+      var fn = function () {
+        this.$store.dispatch('plan/delete', { id, version }).then((res) => {
+          if (res.status === '0') {
+            this.$message.success('删除成功')
+            _this.querySchedule()
+          } else {
+            this.$message.error(res.message)
+          }
+        })
+      }
+      this.$refs['ConfirmModal'].show('删除', '确认删除？', fn)
+    },
+    /**
     * 事件： 创建计划表按钮
     */
     saveSchedule (data, crFlag) {
@@ -107,7 +132,7 @@ export default {
         this.$store.dispatch('plan/create', data).then((res) => {
           if (res.status === '0') {
             this.$message.success('创建成功')
-            this.queryPumpsGroup()
+            this.querySchedule()
           } else {
             this.$message.error(res.message)
           }
@@ -115,7 +140,7 @@ export default {
       } else {
         this.$store.dispatch('plan/update', data).then((res) => {
           if (res.status === '0') {
-            this.queryPumpsGroup()
+            this.querySchedule()
           } else {
             this.$message.error(res.message)
           }
@@ -128,11 +153,12 @@ export default {
     querySchedule () {
       this.$store.dispatch('plan/find', this.pageParams).then((res) => {
         if (res.status === '0') {
-          this.scheduleList = res.data.data.map(li => ({            ...li,
+          this.scheduleList = res.data.data.map(li => ({
+            ...li,
             planItems: li.planItems.map(i => ({
               ...i,
-              beginTime: new Date(i.beginTime).format("hh:mm"),
-              endTime: new Date(i.endTime).format("hh:mm"),
+              beginTime: new Date(i.beginTime).format('hh:mm'),
+              endTime: new Date(i.endTime).format('hh:mm')
             }))
           }))
           this.pageParams.total = res.data.total
